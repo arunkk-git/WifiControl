@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
@@ -77,6 +78,13 @@ public class ListViewBaseAdaptor extends BaseAdapter {
         TextView decs = holder.Description;
         TextView title = holder.Title;
         Switch onOff = holder.onOff;
+        onOff.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                L.t(context,"isChecked : "+isChecked);
+                MainActivity.getInstance().setWifiControl(isChecked);
+            }
+        });
         ArrayList<ToggleButton> week_Day = holder.weekDay;
 
         title.setText(list.get(position).Title);
@@ -87,7 +95,6 @@ public class ListViewBaseAdaptor extends BaseAdapter {
         for(int i = 0 ;i<7;i++){
             week_Day.get(i).setChecked(list.get(position).week[i]);
         }
-
         return row;
     }
 
@@ -113,9 +120,6 @@ public class ListViewBaseAdaptor extends BaseAdapter {
             weekDay.add(4, (ToggleButton) ll.findViewById(R.id.thu));
             weekDay.add(5, (ToggleButton) ll.findViewById(R.id.fri));
             weekDay.add(6, (ToggleButton) ll.findViewById(R.id.sat));
-
-            Log.d("ARUN", "Dome");
-
         }
     }
 }
